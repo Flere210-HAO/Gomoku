@@ -9,9 +9,9 @@ pygame.init()
 screen = pygame.display.set_mode((670,670))
 #设置窗口颜色
 screen_color = [255,255,255] #白色
-while True:
-    for event in pygame.event.get():
-        if event.type in pygame.QUIT:
+while True: #刷新画布（pygame就像一个画布不断刷新
+    for event in pygame.event.get():  #获取事件，如果点击窗口右上角的关闭案件即关闭
+        if event.type in (pygame.QUIT,pygame.KEYDOWN):
             sys.exit()
-        screen.fill(screen_color)
-        pygame.display.update()
+        screen.fill(screen_color)  #清屏，刷成了screen_color 的颜色
+        pygame.display.update()  #更新pygame这个画布
