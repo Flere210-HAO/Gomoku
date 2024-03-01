@@ -1,4 +1,6 @@
 #调用pygame库来进行棋盘的设置
+import queue
+
 import pygame
 import sys
 import numpy as np
@@ -15,6 +17,8 @@ line_color = [0,0,0] #设置线条颜色，黑色
 tim=0 #给鼠标左键建立延迟时间
 
 board = np.zeros((15,15)) #存作棋盘的棋子位置
+over_pos= queue.Queue()
+
 
 def find_pos(x,y):
     for i in range(27,670,44):
