@@ -79,6 +79,7 @@ while True: #刷新画布（pygame就像一个画布不断刷新
                     over_pos.append([[x,y],black_color])
                 else:
                     over_pos.append([[x,y],white_color])
+
     if flag: #做出200Ms的延迟
         tim=tim+1
     if tim%200==0:
@@ -87,5 +88,6 @@ while True: #刷新画布（pygame就像一个画布不断刷新
 
     for val in over_pos: #画下棋子
         pygame.draw.circle(screen,val[1],val[0],15,0)
+        print(val[0])
 
     pygame.display.update()  #更新pygame这个画布
