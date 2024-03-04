@@ -26,18 +26,50 @@ def find_pos(x,y):
                 return i,j
     return x,y
 
-def check_pos(x,y,over_pos):
-    for val in over_pos:
+def check_pos(x,y,pos):
+    for val in pos:
         if val[0][0]==x and val[0][1]==y:
             return False
     return True #表示没有落子
 
 
 tim=0 #给鼠标左键建立延迟时间
-board = np.zeros((15,15)) #存作棋盘的棋子位置
+board = np.zeros((15,15)) #存作棋盘的棋子位置(用一个全局变量存下来可以减少运算)
 #over_pos = queue.Queue()  本来想着队列先进先出好弄悔棋，但是遍历队列需要迭代器不如列表
 over_pos=[]
 flag=False
+direction=[(1,0),(0,1),(1,1),(1,-1)]
+
+def check_win(pos):
+    if len(pos)==0:
+        return False
+    val = pos[len(pos)-1]
+    x = int((val[0][0] - 27) / 44)
+    y = int((val[0][1] - 27) / 44)
+    if val[1]==black_color:
+        board[x][y]=1
+    else:
+        board[x][y]=2
+    for os in direction:
+        if check_direction_win(x,y,board[x][y],os[0],os[1]):
+            return True
+
+def check_direction_win(point_x,point_y,chest,x_offset,y_offset):
+    count = 1
+    for step in range(-4,4):
+        x=point_x+step*x_offset
+        y=point_y+step*y_offset
+        if step==0:
+            break
+        if 0<=x<15 and 0<=y<15 and board[x][y]==chest:
+            count=count+1
+        elif count<5 and board[x][y]!=chest:
+            count=1
+        else:
+            break
+    return count>=5
+
+
 
 while True: #刷新画布（pygame就像一个画布不断刷新
     for event in pygame.event.get():  #获取事件，如果点击窗口右上角的关闭案件即关闭
@@ -89,5 +121,10 @@ while True: #刷新画布（pygame就像一个画布不断刷新
     for val in over_pos: #画下棋子
         pygame.draw.circle(screen,val[1],val[0],15,0)
         print(val[0])
-
+    if check_win(over_pos):
+        val = over_pos[len(over_pos) - 1]
+        if val[1]==black_color:
+            print('Black Win!')
+        else:
+            print('White Win!')
     pygame.display.update()  #更新pygame这个画布
