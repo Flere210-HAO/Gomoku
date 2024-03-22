@@ -9,6 +9,7 @@ import numpy as np
 pygame.init()
 #获取对显示的访问，并创建一个窗口screen
 #设置窗口大小
+start_screen = pygame.display.set_mode(670,670)
 screen = pygame.display.set_mode((850,670))  #调整宽度来给调整类型按钮留下空间
 #设置窗口颜色
 screen_color = [238,155,65] #白色(换成像棋盘一样的颜色
@@ -68,6 +69,25 @@ def check_direction_win(point_x,point_y,chest,x_offset,y_offset):
         else:
             break
     return count>=5
+
+
+
+clock = pygame.time.Clock()
+s1 = pygame.image.load("./image/S1.png")
+s1.convert()
+s2 = pygame.image.load("./image/S2.png")
+s2.convert()
+e1 = pygame.image.load("./image/E1.png")
+e1.convert()
+e2 = pygame.image.load("./image/E2.png")
+e2.convert()
+n1=True
+while n1:
+    clock.tick(30)
+    buttons=pygame.mouse.get_pressed()
+    x1,y1=pygame.mouse.get_pos()
+
+
 
 
 
